@@ -1,0 +1,24 @@
+1. Registro público de Clientes
+2. Que envíe correo con Sendgrid
+3. Pertalertar (Con alerta de campanita)
+4. Recibo tracking (Muestra las instrucciones)
+5. 
+
+Con el propósito de mejorar el código, aprovechando que es un proyecto actualmente pequeño,
+he decidido corregir varios errores para continuar con el desarrollo limpio, de este y demás proyectos.
+Entre los errores más reptitivos estan:
+  a. Combinar español con ingles.
+  b. Definición de variables que son poco descriptivas, por ejemplo no es lo mismo decir que L = 2 a decir LevelInitial = 2.
+  c. Las funciones y archivos son demasiado largos y están poco separados los diferentes módulos.
+  d. No se hacen pruebas de ningún tipo.
+  e. no se manejan las excepciones, es decir que yo retorno un code 200 sin validar si existe un error para tratarlo como tal.
+  f. Hay validaciones que se asumen, por ejemplo en la BD la columna name es un varchar(255), per los input no tienen límite de caracteres,
+     así que puedo escribir lo que quiera y provocar un error facilmente.
+  g. Los mensajes de error no son claros la mayoría de veces
+     Por ejemplo dice: "error al guardar", pero no dice por que puede ser el error, y eso como usuario deja desconcertado.
+  h. Los botones, modales y demás elementos no tienen un estandar definido, 
+     por ejemplo a veces los botones dicen guardar y a veces cerrar o aceptar.
+  i. Hacer uso de las herramientas de refactorización o separación de código, como el sistemas de notificaciones.
+
+Es claro que corregir estos y demás errores que tenemos actualmente es un proceso que requiere tiempo y paciencia
+sin embargo, no es posible avanzar sino nos damos la tarea de empezar a darle prioridad a la calidad en lugar de la velocidad.
