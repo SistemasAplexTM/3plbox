@@ -11,7 +11,7 @@ Entre los errores más reptitivos estan:
   b. Definición de variables que son poco descriptivas, por ejemplo no es lo mismo decir que L = 2 a decir LevelInitial = 2.
   c. Las funciones y archivos son demasiado largos y están poco separados los diferentes módulos.
   d. No se hacen pruebas de ningún tipo.
-  e. no se manejan las excepciones, es decir que yo retorno un code 200 sin validar si existe un error para tratarlo como tal.
+  e. No se manejan las excepciones, es decir que yo retorno un code 200 sin validar si existe un error para tratarlo como tal.
   f. Hay validaciones que se asumen, por ejemplo en la BD la columna name es un varchar(255), per los input no tienen límite de caracteres,
      así que puedo escribir lo que quiera y provocar un error facilmente.
   g. Los mensajes de error no son claros la mayoría de veces

@@ -5,7 +5,10 @@
         <h2>Clientes</h2>
       </div>
       <div class="body">
-        <table class="table table-bordered table-striped table-hover dataTable" id="tbl-people">
+        <table
+          class="table table-bordered table-striped table-hover dataTable"
+          id="tbl-tracking_receipt"
+        >
           <thead>
             <tr>
               <th>Nombre</th>
@@ -21,7 +24,7 @@
 </template>
 <script>
 $(document).ready(function() {
-  var table = $("#tbl-people").DataTable({
+  var table = $("#tbl-tracking_receipt").DataTable({
     // processing: true,
     // serverSide: true,
     // responsive: true,
@@ -46,7 +49,7 @@ function edit(id, name, email) {
     name: name,
     email: email
   };
-  bus.$emit("editPeople", data);
+  bus.$emit("edittracking_receipt", data);
 }
 
 export default {
@@ -55,13 +58,13 @@ export default {
   },
   created() {
     let me = this;
-    bus.$on("updateListPeople", function() {
-      recargarTabla2("tbl-people");
+    bus.$on("updateListtracking_receipt", function() {
+      recargarTabla2("tbl-tracking_receipt");
+      notifyMesagge("bg-teal", "Registro creado con éxito");
       console.log("RECARGANDO TABLA");
     });
-    bus.$on("deletePeople", function(id) {
+    bus.$on("deletetracking_receipt", function(id) {
       me.delete(id);
-      console.log("Eliminar persona: ", id);
     });
   },
   methods: {
@@ -71,7 +74,7 @@ export default {
         .delete(id)
         .then(function(response) {
           notifyMesagge("bg-teal", "Registro eliminado con éxito");
-          recargarTabla2("tbl-people");
+          recargarTabla2("tbl-tracking_receipt");
         })
         .catch(function(error) {
           console.log(error);

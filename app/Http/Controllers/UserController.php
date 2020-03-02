@@ -20,35 +20,37 @@ class UserController extends Controller
         return view('templates.user');
     }
 
-    public function store(Request $request){
-      return User::create([
-          'name' => $request['name'],
-          'email' => $request['email'],
-          'password' => Hash::make($request['password']),
-      ]);
+    public function store(Request $request)
+    {
+        return User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
     }
 
-    public function update(Request $request, $id){
-      User::where('id', $id)->update($request->all());
+    public function update(Request $request, $id)
+    {
+        User::where('id', $id)->update($request->all());
     }
 
     public function all()
     {
-    	$data = User::where('id', '<>', \Auth::user()->id)->get();
-      return Datatables::of($data)->make(true);
+        $data = User::where('id', '<>', \Auth::user()->id)->get();
+        return Datatables::of($data)->make(true);
     }
 
     public function validateEmail($email)
     {
         try {
             $data = User::withTrashed()->where('email', $email)->first();
-            if ($data){
-                $answer=array(
+            if ($data) {
+                $answer = array(
                     "valid" => false,
                     "message" => "El correo ya existe."
                 );
-            }else{
-                $answer=array(
+            } else {
+                $answer = array(
                     "valid" => true,
                     "message" => ""
                 );
@@ -59,7 +61,8 @@ class UserController extends Controller
         }
     }
 
-    public function destroy($id){
-      User::where('id', $id)->forceDelete();
+    public function destroy($id)
+    {
+        User::where('id', $id)->forceDelete();
     }
 }

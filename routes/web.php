@@ -51,6 +51,7 @@ Route::namespace('People')->group(function () {
       Route::get('index', 'PeopleController@index')->name('peoples');
       Route::get('all', 'PeopleController@all');
       Route::delete('{id}', 'PeopleController@delete');
+      Route::post('update/{id}', 'PeopleController@update');
     });
     Route::post('save', 'PeopleController@store');
   });

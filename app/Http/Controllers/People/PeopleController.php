@@ -37,6 +37,20 @@ class PeopleController extends Controller
     }
   }
 
+  public function update(Request $request, $id)
+  {
+    try {
+      $people = People::where('id', $id)->update($request->all());
+      // $user = User::where('id', )->update([
+      //   'name' => $request->names,
+      //   'email' => $request->email,
+      // ]);
+      return ['code' => 200];
+    } catch (\Throwable $th) {
+      return $th;
+    }
+  }
+
   public function all()
   {
     try {

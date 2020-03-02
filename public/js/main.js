@@ -23531,7 +23531,7 @@ $(document).ready(function () {
 function imp_btn(edit, id, params, isComponent) {
     var btn_cancel = " <a id='btn_cancel_" + id + "' onclick=\"cancel('_cancel_'," + id + ")\" class='btn btn-outline btn-danger btn-xs hide' data-toggle='tooltip' title='Cancelar'><i class='material-icons'>close</i></a> ";
     var btn_confirm = " <a id='btn_confirm_" + id + "' onclick=\"confirm('_confirm_'," + id + ")\" class='btn btn-outline btn-danger btn-xs' data-toggle='tooltip' title='Eliminar'><i class='material-icons'>delete</i></a>";
-    var btn_delete = " <a id='btn_delete_" + id + "' onclick=\"eliminar(" + id + ", " + isComponent + ")\" class='btn btn-outline btn-primary btn-xs hide' data-toggle='tooltip' title='Confirmar'><i class='material-icons'>check</i></a> ";
+    var btn_delete = " <a id='btn_delete_" + id + "' onclick=\"eliminar(" + id + ", '" + isComponent + "')\" class='btn btn-outline btn-primary btn-xs hide' data-toggle='tooltip' title='Confirmar'><i class='material-icons'>check</i></a> ";
     var btn_edit = '';
     if (edit == true) {
         btn_edit = " <a onclick=\"edit(" + params + ")\" class='btn btn-outline btn-primary btn-xs' data-toggle='tooltip' title='Editar'><i class='material-icons'>edit</i></a>";
@@ -23539,12 +23539,17 @@ function imp_btn(edit, id, params, isComponent) {
     return btn_edit + btn_delete + btn_confirm + btn_cancel;
 }
 /*-- Función para pasar el id de jQuery  a vue para eliminarlo --*/
-function eliminar(id, isComponent) {
-    if (isComponent) {
-        bus.$emit("deletePeople", id);
+function eliminar(id, typeInComponent) {
+    if (typeInComponent) {
+        bus.$emit("delete", { id, type: typeInComponent });
     } else {
         objVue.delete(id);
     }
+}
+
+function edit(id, param_1, param_2, param_3, param_4, param_5, param_6) {
+    let data = { id, param_1, param_2, param_3, param_4, param_5, param_6 }
+    bus.$emit("edit", data);
 }
 
 function confirm(btn, id) {

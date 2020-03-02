@@ -1,3 +1,17 @@
+function edit_locale(id, names, email, phone, country, city, province, address) {
+  var data = {
+    id: id,
+    names: names != "null" ? names : '',
+    email: email != "null" ? email : '',
+    phone: phone != "null" ? phone : '',
+    country: country != "null" ? country : '',
+    city: city != "null" ? city : '',
+    province: province != "null" ? province : '',
+    address: address != "null" ? address : ''
+  };
+  bus.$emit("editPeople", data);
+}
+
 const objVue = new Vue({
   el: '#people',
   data: {
@@ -7,3 +21,4 @@ const objVue = new Vue({
 
   }
 });
+

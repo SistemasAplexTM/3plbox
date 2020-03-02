@@ -5,7 +5,7 @@
         <h2>Clientes</h2>
       </div>
       <div class="body">
-        <table class="table table-bordered table-striped table-hover dataTable" id="tbl-people">
+        <table class="table table-bordered table-striped table-hover" id="tbl-people">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -32,22 +32,22 @@ $(document).ready(function() {
       {
         sortable: false,
         render: function(data, type, full, meta) {
-          var params = [full.id, "'" + full.name + "'", "'" + full.email + "'"];
-          return imp_btn(true, full.id, params, true);
+          var params = [
+            full.id,
+            "'" + full.names + "'",
+            "'" + full.email + "'",
+            "'" + full.phone + "'",
+            "'" + full.country + "'",
+            "'" + full.city + "'",
+            "'" + full.province + "'",
+            "'" + full.address + "'"
+          ];
+          return imp_btn(true, full.id, params, "people");
         }
       }
     ]
   });
 });
-
-function edit(id, name, email) {
-  var data = {
-    id: id,
-    name: name,
-    email: email
-  };
-  bus.$emit("editPeople", data);
-}
 
 export default {
   data() {
@@ -55,27 +55,29 @@ export default {
   },
   created() {
     let me = this;
-    bus.$on("updateListPeople", function() {
-      recargarTabla2("tbl-people");
-      console.log("RECARGANDO TABLA");
-    });
-    bus.$on("deletePeople", function(id) {
-      me.delete(id);
-      console.log("Eliminar persona: ", id);
+    // bus.$on("updateList", table => {
+    //   recargarTabla2(table);
+    //   notifyMesagge("bg-teal", "Registro creado con éxito");
+    //   console.log("RECARGANDO TABLA");
+    // });
+    bus.$on("delete", payload => {
+      if (payload.type == "people") {
+        me.delete(payload.id);
+      }
     });
   },
   methods: {
-    delete: function(id) {
+    delete(id) {
       let me = this;
       axios
         .delete(id)
-        .then(function(response) {
+        .then(response => {
           notifyMesagge("bg-teal", "Registro eliminado con éxito");
           recargarTabla2("tbl-people");
         })
-        .catch(function(error) {
+        .catch(error => {
           console.log(error);
-          notifyMesagge("bg-red", "Error");
+          notifyMesagge("bg-red", "Error al intentar eliminar");
         });
     }
   }

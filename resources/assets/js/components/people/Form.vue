@@ -22,8 +22,9 @@
       <el-input type="textarea" v-model="formPeople.address"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="submitForm()" icon="el-icon-save">Create</el-button>
-      <el-button @click="resetForm()">Limpiar</el-button>
+      <el-button v-if="!editing" type="primary" @click="submitForm()" icon="el-icon-check">Registrar</el-button>
+      <el-button v-else type="primary" @click="submitForm()" icon="el-icon-check">Actualizar</el-button>
+      <el-button @click="resetForm()" icon="el-icon-refresh">Resetear</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -31,14 +32,15 @@
 export default {
   data() {
     return {
+      editing: false,
       formPeople: {
-        names: "Duvier Marin Escobar",
-        email: "duvierm24@gmail.com",
-        phone: "3122414492",
-        address: "Manzana 4 Casa 14. Barrio Villamarina",
-        country: "Colombia",
-        city: "Pradera",
-        province: "Valle del Cauca"
+        names: "",
+        email: "",
+        phone: "",
+        address: "",
+        country: "",
+        city: "",
+        province: ""
       },
       rules: {
         names: [
@@ -67,7 +69,6 @@ export default {
     let me = this;
     bus.$on("editPeople", function(params) {
       me.edit(params);
-      console.log("Editar persona: ", id);
     });
   },
   methods: {
@@ -77,16 +78,33 @@ export default {
     },
     async save() {
       let result = await axios.post("save", this.formPeople);
+      notifyMesagge("bg-teal", "Registrado con éxito");
+      return result.data.code === 200 ? true : false;
+    },
+    async update() {
+      let id = this.formPeople.id;
+      let result = await axios.post("update/" + id, this.formPeople);
+      this.editing = false;
       return result.data.code === 200 ? true : false;
     },
     submitForm() {
       this.$refs["formPeople"].validate(valid => {
         if (valid) {
-          let response = this.save();
+          let response = null;
+          if (this.editing) {
+            console.log("update: ", this.editing);
+            response = this.update();
+          } else {
+            console.log("save: ", this.editing);
+            response = this.save();
+          }
+
           if (response) {
-            this.resetForm();
+            let me = this;
             setTimeout(() => {
-              bus.$emit("updateListPeople");
+              me.resetForm();
+              recargarTabla2("tbl-people");
+              // bus.$emit("updateList", "tbl-people");
             }, 500);
           }
         } else {
